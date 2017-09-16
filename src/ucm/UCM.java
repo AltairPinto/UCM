@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ula;
+package ucm;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,21 +15,21 @@ import java.util.Scanner;
  *
  * @author altai
  */
-public class ULA {
+public class UCM {
 
     /**
      * @param args the command line arguments
      */
-
     public static void main(String[] args) throws FileNotFoundException {
         // TODO code application logic here
-        String AbsolutePath = new File("").getAbsolutePath() + "/src/folder/";
-        Scanner scanner = new Scanner(new FileReader(AbsolutePath + "memData.txt"));
 
-        HashMap<Integer, Integer> map = new HashMap<>();
+        String AbsolutePath = new File("").getAbsolutePath() + "/src/folder/";  // Get path of file
+        Scanner scanner = new Scanner(new FileReader(AbsolutePath + "memData.txt"));    // Open file
 
-        while (scanner.hasNextLine()) {
-            String [] lines = scanner.nextLine().split(" ");
+        HashMap<Integer, Integer> map = new HashMap<>();    // Memory Position => Value
+
+        while (scanner.hasNextLine()) {     // Get values of file and put in Hashmap
+            String[] lines = scanner.nextLine().split(" ");
             map.put(Integer.parseInt(lines[0]), Integer.parseInt(lines[1]));
         }
 
