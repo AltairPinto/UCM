@@ -33,13 +33,12 @@ public class UCM {
         
         Data data = new Data();     // Object to get file data
         data.fileRead("memData.txt", memory, empty);   // Get values of memData.txt
-        data.readCommands("memInst.txt", memory, commands);   // Get values of memData.txt
-
         System.out.println("Memory HashMap: " + memory);
         System.out.println("Empty memory slots: " + empty);
+        data.readCommands("memInst.txt", memory, commands);   // Get values of memData.txt
 
         // Recorders to save values of operations
-        int result_ADD;
+        /*int result_ADD;
         int result_SUB;
         int result_MUL;
         int result_DIV;
@@ -60,9 +59,9 @@ public class UCM {
         memory.put(empty.get(5),result_ADD);
         memory.put(empty.get(7),result_SUB);
         memory.put(empty.get(9),result_MUL);
-        memory.put(empty.get(11),result_DIV);
+        memory.put(empty.get(11),result_DIV);*/
 
-        System.out.println(memory);
+        System.out.println("Result of operations: " + memory);
         
         // Save results in other file for tests
         data.fileRecord("memResult.txt", memory);

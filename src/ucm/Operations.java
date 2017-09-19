@@ -13,20 +13,48 @@ import java.util.HashMap;
  */
 public class Operations {
     
-    public int ADD(int reg_1, int reg_2){
-        return reg_1 + reg_2;
+    private int[] reg = new int[2];
+    private int operator;
+    private int address;
+    
+    public void ADD(int address, int reg_1, int reg_2){
+        reg[0] = reg_1 + reg_2;
+        setOperator(Integer.parseInt(""+(int)reg[0]));
+        setAddress(address);
     }
     
-    public int SUB(int reg_1, int reg_2){
-        return reg_1 - reg_2;
+    public void SUB(int address, int reg_1, int reg_2){
+        reg[0] = reg_1 - reg_2;
+        setOperator(Integer.parseInt(""+(int)reg[0]));
+        setAddress(address);
     }
     
-    public int MUL(int reg_1, int reg_2){
-        return reg_1 * reg_2;
+    public void MUL(int address, int reg_1, int reg_2){
+        reg[0] = reg_1 * reg_2;
+        setOperator(Integer.parseInt(""+(int)reg[0]));
+        setAddress(address);
     }
     
-    public int DIV(int reg_1, int reg_2){
-        return reg_1 / reg_2;
+    public void DIV(int address, int reg_1, int reg_2){
+        reg[0] = reg_1 / reg_2;
+        setOperator(Integer.parseInt(""+(int)reg[0]));
+        setAddress(address);
+    }
+    
+     public int getOperator() {
+        return operator;
+    }
+
+    public void setOperator(int operator) {
+        this.operator = operator;
+    }
+
+    public int getAddress() {
+        return address;
+    }
+
+    public void setAddress(int address) {
+        this.address = address;
     }
     
 }
