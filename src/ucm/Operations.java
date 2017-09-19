@@ -5,6 +5,8 @@
  */
 package ucm;
 
+import java.util.HashMap;
+
 /**
  *
  * @author altai

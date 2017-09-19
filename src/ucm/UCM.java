@@ -25,14 +25,16 @@ public class UCM {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) throws FileNotFoundException, IOException{
 
         HashMap<Integer, Integer> memory = new HashMap<>();    // Memory Position => Value
         ArrayList<Integer> empty = new ArrayList<>();     // List of empty memory spaces
+        ArrayList<String> commands = new ArrayList<>();     // List of commands
         
         Data data = new Data();     // Object to get file data
-        data.fileOpen("memData.txt", memory, empty);   // Get values of memData.txt
-        
+        data.fileRead("memData.txt", memory, empty);   // Get values of memData.txt
+        data.readCommands("memInst.txt", memory, commands);   // Get values of memData.txt
+
         System.out.println("Memory HashMap: " + memory);
         System.out.println("Empty memory slots: " + empty);
 
