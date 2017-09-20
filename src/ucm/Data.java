@@ -148,8 +148,33 @@ public class Data {
                     state = "EXECUTE";
                     cycles++;
                     break;
-                default:
+		case "JMP":
+		    operations.JMP(address_1, operator_1, operator_2);
+                    PC = operations.getPC();
+		    state = "FETCH";
+		    cycles++;
+		     break;
+		case "JMPM":
+		    operations.JMPM(address_1, operator_1, operator_2);
+                    PC = operations.getPC();
+		    state = "FETCH";
+		    cycles++;
+		     break;
+		case "JMPL":
+		    operations.JMPL(address_1, operator_1, operator_2);
+                    PC = operations.getPC();
+		    state = "FETCH";
+		    cycles++;
+		    break;
+		case "JMPZ":
+		    operations.JMPZ(address_1, operator_1, operator_2);
+                    PC = operations.getPC();
+    		    state = "FETCH";
+		    cycles++;
+		    break;
+		 default:
                     break;
+
             }
 
             if (state.equals("EXECUTE")) {

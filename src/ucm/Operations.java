@@ -16,6 +16,8 @@ public class Operations {
     private int[] reg = new int[2];
     private int operator;
     private int address;
+    private int PC;
+    
     
     public void ADD(int address, int reg_1, int reg_2){
         reg[0] = reg_1 + reg_2;
@@ -40,7 +42,35 @@ public class Operations {
         setOperator(Integer.parseInt(""+(int)reg[0]));
         setAddress(address);
     }
-    
+
+   public void JMP(int address, int reg_1, int reg_2){
+        PC=reg[0];
+        setOperator(Integer.parseInt(""+(int)reg[0]));
+        setAddress(address);
+}   
+     
+    public void JMPM(int address, int reg_1, int reg_2){
+        if(reg_1>reg_2){
+	PC =reg[0];  
+        setOperator(Integer.parseInt(""+(int)reg[0]));
+        setAddress(address);
+        
+}}
+
+    public void JMPL(int address, int reg_1, int reg_2){
+        if(reg_1<reg_2){
+	PC=reg[0];
+        setOperator(Integer.parseInt(""+(int)reg[0]));
+        setAddress(address);
+}}
+
+    public void JMPZ(int address, int reg_1, int reg_2){
+        if(reg_1==0){
+	PC=reg[0];
+        setOperator(Integer.parseInt(""+(int)reg[0]));
+        setAddress(address);
+}}
+     
      public int getOperator() {
         return operator;
     }
@@ -57,4 +87,11 @@ public class Operations {
         this.address = address;
     }
     
+     public int getPC() {
+        return PC;
+    }
+
+    public void setPC(int operator) {
+        this.PC = PC;
+    }
 }
