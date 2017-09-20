@@ -44,14 +44,14 @@ public class Operations {
     }
 
    public void JMP(int address, int reg_1, int reg_2){
-        PC=reg[0];
+        PC=address;
         setOperator(Integer.parseInt(""+(int)reg[0]));
         setAddress(address);
 }   
      
     public void JMPM(int address, int reg_1, int reg_2){
         if(reg_1>reg_2){
-	PC =reg[0];  
+	PC =address;  
         setOperator(Integer.parseInt(""+(int)reg[0]));
         setAddress(address);
         
@@ -59,14 +59,14 @@ public class Operations {
 
     public void JMPL(int address, int reg_1, int reg_2){
         if(reg_1<reg_2){
-	PC=reg[0];
+	PC=address;
         setOperator(Integer.parseInt(""+(int)reg[0]));
         setAddress(address);
 }}
 
     public void JMPZ(int address, int reg_1, int reg_2){
         if(reg_1==0){
-	PC=reg[0];
+	PC=address;
         setOperator(Integer.parseInt(""+(int)reg[0]));
         setAddress(address);
 }}
