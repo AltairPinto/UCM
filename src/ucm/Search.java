@@ -16,26 +16,7 @@ public class Search {
     private int address;
     private int operator;
 
-    /*public void getDestinyInfos(String INST, HashMap memory) {
-        // Break the String to find address and value
-        char[] op = INST.toCharArray();
-
-        if (op[0] == 'R') {          // Recorder detected
-            switch (op.length) {
-                case 2:
-                    System.out.println(op[1]);
-                    this.setAddress(Integer.parseInt("" + op[1]));  // Set in address the key of memory position
-                    break;
-                case 3:
-                    this.setAddress(Integer.parseInt((int) op[1] + "" + (int) op[2]));  // Set in address the key of memory position
-                    break;
-            }
-        } else {        // Value detected
-            this.setOperator(Integer.parseInt(INST));
-        }
-    }*/
-
-    public void getMemoryInfos(String INST, HashMap memory) {
+   public void getMemoryInfos(String INST, HashMap memory) {
         // Break the String to find address and value
         char[] op = INST.toCharArray();
 
@@ -50,14 +31,14 @@ public class Search {
                         this.setAddress(Integer.parseInt("" + op[1]));  // Set in address the key of memory position
                         this.setOperator(Integer.parseInt("" + memory.get(address)));   // Set key value in operator
                         break;
-                    case '<':
+                    /*case '<':
                         this.setAddress(Integer.parseInt("" + op[1]));  // Set in address the key of memory position
                         this.setOperator(Integer.parseInt("" + memory.get(address)));   // Set key value in operator
                         break;
                     case 'x':
                         this.setAddress(0);
                         this.setOperator(0);
-                        break;
+                        break;*/
                     default:
                         this.setAddress(0);
                         this.setOperator(Integer.parseInt(INST));
@@ -70,14 +51,14 @@ public class Search {
                         this.setAddress(Integer.parseInt((int) op[1] + "" + (int) op[2]));  // Set in address the key of memory position
                         this.setOperator(Integer.parseInt("" + memory.get(address)));   // Set key value in operator
                         break;
-                    case '<':
+                    /*case '<':
                         this.setAddress(Integer.parseInt((int) op[1] + "" + (int) op[2]));  // Set in address the key of memory position
                         this.setOperator(Integer.parseInt("" + memory.get(address)));   // Set key value in operator
                         break;
                     case 'x':
                         this.setAddress(0);
                         this.setOperator(0);
-                        break;
+                        break;*/
                     default:
                         this.setAddress(0);
                         this.setOperator(Integer.parseInt(INST));
@@ -88,11 +69,6 @@ public class Search {
                 break;
         }
 
-    }
-
-    public int getValue(HashMap memory, int address, int value) {
-
-        return value;
     }
 
     public int getAddress() {

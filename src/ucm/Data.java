@@ -78,13 +78,13 @@ public class Data {
         String[] INST;  // Values and registers of operation
 
         // Parts of instruction
-        String INST_1;
-        String INST_2;
-        String INST_3;
+        String INST_1 = null;
+        String INST_2 = null;
+        String INST_3 = null;
 
         // Address and Operators
         int address_1 = 0, address_2 = 0, address_3 = 0;
-        int operator_1 = 0, operator_2 = 0;
+        int operator_1 = 0, operator_2 = 0, operator_dest = 0;
 
         // Fetch
         while (scanner.hasNextLine()) {     // Get values of file and put in ArrayList
@@ -92,40 +92,75 @@ public class Data {
             System.out.println("\nState: " + state);
 
             String[] line = scanner.nextLine().split(" ");     // Split command based in spaces in line
-            IR = line[0];                // Get command in first position of line      
+            IR = line[0];                // Get command in first position of line => Set last operation in IR      
             INST = line[1].split(",");   // Break the rest of String in 3 parts
-
-            // Instructions after split
-            INST_1 = INST[0];
-            INST_2 = INST[1];
-            INST_3 = INST[2];
-
-            System.out.println("\nRegisters and values"
-                    + "\nInstruction Register: " + IR
-                    + "\nDestiny: " + INST_1
-                    + "\nOperator_1: " + INST_2
-                    + "\nOperator_2: " + INST_3);
-
-            IR = line[0];       // Set last operation in IR
-            PC++;               // Increment Program Counter to next instruction
-            cycles++;           // Increment Cycles
-
+            System.out.println("IR: " + IR);
+            
             state = "DECODE";
             System.out.println("\nState: " + state);
+            // Instructions after split
+            try {
+                INST_1 = INST[0];
+                INST_2 = INST[1];
+                INST_3 = INST[2];
+                
+                System.out.println("\nRegisters and values"
+                        + "\nInstruction Register: " + IR
+                        + "\nDestiny: " + INST_1
+                        + "\nOperator_1: " + INST_2
+                        + "\nOperator_2: " + INST_3);
 
-            search.getMemoryInfos(INST_1, memory);        // Set infos of IR
-            address_1 = search.getAddress();
-            System.out.println("Address: " + address_1);
+                    search.getMemoryInfos(INST_1, memory);        // Set infos of IR
+                    address_1 = search.getAddress();
+                    if (address_1 == 0){
+                        operator_dest = search.getOperator();
+                        System.out.println("\nOperation Position: " + operator_dest);
+                    }
+                    else                
+                        System.out.println("Address: " + address_1);
 
-            search.getMemoryInfos(INST_2, memory);        // Set infos of IR
-            address_2 = search.getAddress();
-            operator_1 = search.getOperator();
-            System.out.println("Operator_1: " + operator_1);
+                    search.getMemoryInfos(INST_2, memory);        // Set infos of IR
+                    address_2 = search.getAddress();
+                    operator_1 = search.getOperator();
+                    System.out.println("Operator_1: " + operator_1);
 
-            search.getMemoryInfos(INST_3, memory);        // Set infos of IR
-            address_3 = search.getAddress();
-            operator_2 = search.getOperator();
-            System.out.println("Operator_2: " + operator_2);
+                    search.getMemoryInfos(INST_3, memory);        // Set infos of IR
+                    address_3 = search.getAddress();
+                    operator_2 = search.getOperator();
+                    System.out.println("Operator_2: " + operator_2);
+                    
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Non-Arithmetic Operation");
+                if (IR.equals("JMP")) {
+                    INST_3 = "NULL";
+                    INST_2 = "NULL";
+
+                    System.out.println("\nRegisters and values"
+                            + "\nInstruction Register: " + IR
+                            + "\nDestiny: " + INST_1);
+
+                    search.getMemoryInfos(INST_1, memory);        // Set infos of IR
+                    address_1 = search.getAddress();
+                    operator_dest = search.getOperator();
+                }
+                else if(IR.equals("JMPZ") || IR.equals("MOV")){
+                   INST_3 = "NULL"; 
+                   System.out.println("\nRegisters and values"
+                            + "\nInstruction Register: " + IR
+                            + "\nDestiny: " + INST_1
+                            + "\nOperator_1: " + INST_2);
+
+                    search.getMemoryInfos(INST_1, memory);        // Set infos of IR
+                    address_1 = search.getAddress();
+                    operator_dest = search.getOperator();
+                    
+                    search.getMemoryInfos(INST_2, memory);        // Set infos of IR
+                    address_2 = search.getAddress();
+                    operator_1 = search.getOperator();
+                }
+            }
+            PC++;               // Increment Program Counter to next instruction
+            cycles++;           // Increment Cycles
 
             switch (IR) {
                 case "ADD":
@@ -148,14 +183,67 @@ public class Data {
                     state = "EXECUTE";
                     cycles++;
                     break;
+                case "JMP":
+                    if(address_1 == 0)
+                        operations.JMP(operator_dest);
+                    else
+                        operations.JMP(address_1);    
+                    PC = operations.getPC();
+                    System.out.println("\nResult of JMP: " + PC);
+                    state = "FETCH";
+                    cycles++;
+                    break;
+                case "JMPM":
+                    if(address_1 == 0)
+                        operations.JMPM(operator_dest, operator_1, operator_2);
+                    else
+                        operations.JMPM(address_1, operator_1, operator_2);
+                    PC = operations.getPC();
+                    System.out.println("\nResult of JMPM: " + PC);
+                    state = "FETCH";
+                    cycles++;
+                    break;
+                case "JMPL":
+                    if(address_1 == 0)
+                        operations.JMPL(operator_dest, operator_1, operator_2);
+                    else
+                        operations.JMPL(address_1, operator_1, operator_2);
+                    PC = operations.getPC();
+                    System.out.println("\nResult of JMPL: " + PC);
+                    state = "FETCH";
+                    cycles++;
+                    break;
+                case "JMPZ":
+                    if(address_1 == 0)
+                        operations.JMPZ(operator_dest, operator_1);
+                    else
+                        operations.JMPZ(address_1, operator_1);
+                    PC = operations.getPC();
+                    System.out.println("\nResult of JMPZ: " + PC);
+                    state = "FETCH";
+                    cycles++;
+                    break;
+                // Extras
+                case "MOV":
+                    operations.MOV(address_1, operator_1);
+                    System.out.println("R"+operations.getAddress() + " new value: "+operations.getOperator());
+                    state = "EXECUTE";
+                    cycles++;
                 default:
                     break;
             }
 
             if (state.equals("EXECUTE")) {
+                if(IR.equals("MOV"))
+                    System.out.println("\nState: " + state
+                        + "\nOperation: " + IR
+                        + " " + INST_1 + ", " + INST_2
+                        + "\nPC: " + PC);
+                else
                 System.out.println("\nState: " + state
                         + "\nOperation: " + IR
-                        + " " + INST_1 + ", " + INST_2 + ", " + INST_3);
+                        + " " + INST_1 + ", " + INST_2 + ", " + INST_3
+                        + "\nPC: " + PC);
 
                 MAR = operations.getAddress();      // Set memory address
                 MBR = operations.getOperator();     // Set result of operation
